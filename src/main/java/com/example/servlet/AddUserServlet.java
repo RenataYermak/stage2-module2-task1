@@ -3,7 +3,7 @@ package com.example.servlet;
 import com.example.User;
 import com.example.Warehouse;
 
-import javax.servlet.ServletContext;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,12 +15,17 @@ import java.io.IOException;
 public class AddUserServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("jsp/add.jsp").forward(request, response);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("jsp/add.jsp");
+        try {
+            requestDispatcher.forward(request, response);
+        } catch (ServletException | IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         User user = new User(firstName, lastName);
@@ -30,7 +35,11 @@ public class AddUserServlet extends HttpServlet {
         request.setAttribute("firstname", firstName);
         request.setAttribute("lastName", lastName);
 
-        ServletContext servletContext = getServletContext();
-        servletContext.getRequestDispatcher("jsp/add.jsp").forward(request, response);
+        try {
+            response.sendRedirect("/add");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

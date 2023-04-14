@@ -2,7 +2,7 @@ package com.example.servlet;
 
 import com.example.Warehouse;
 
-import javax.servlet.ServletContext;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,11 +14,15 @@ import java.io.IOException;
 public class GetUsersServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         Warehouse warehouse = Warehouse.getInstance();
         request.setAttribute("users", warehouse.getUsers());
-        ServletContext servletContext = getServletContext();
 
-        servletContext.getRequestDispatcher("/jsp/users.jsp").forward(request, response);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("jsp/users.jsp");
+        try {
+            requestDispatcher.forward(request, response);
+        } catch (ServletException | IOException e) {
+            e.printStackTrace();
+        }
     }
 }
