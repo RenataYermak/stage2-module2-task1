@@ -14,7 +14,7 @@ import java.io.IOException;
 @WebServlet("/add")
 public class AddUserServlet extends HttpServlet {
 
-    String path = "jsp/add.jsp";
+    private static final  String path = "jsp/add.jsp";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

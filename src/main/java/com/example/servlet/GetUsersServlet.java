@@ -13,7 +13,7 @@ import java.io.IOException;
 @WebServlet("/users")
 public class GetUsersServlet extends HttpServlet {
 
-    String path = "/jsp/users.jsp";
+    private static final String path = "/jsp/users.jsp";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
