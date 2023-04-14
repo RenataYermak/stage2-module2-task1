@@ -14,11 +14,9 @@ import java.io.IOException;
 @WebServlet("/add")
 public class AddUserServlet extends HttpServlet {
 
-    private static final  String path = "jsp/add.jsp";
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher(path).forward(request, response);
+        getServletContext().getRequestDispatcher("jsp/add.jsp").forward(request, response);
     }
 
     @Override
@@ -33,6 +31,6 @@ public class AddUserServlet extends HttpServlet {
         request.setAttribute("lastName", lastName);
 
         ServletContext servletContext = getServletContext();
-        servletContext.getRequestDispatcher(path).forward(request, response);
+        servletContext.getRequestDispatcher("jsp/add.jsp").forward(request, response);
     }
 }
